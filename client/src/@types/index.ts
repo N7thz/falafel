@@ -1,0 +1,1 @@
+export type Route = "/create-room" | "/enter-room"
