@@ -1,9 +1,9 @@
 import { Router, Request, Response } from "express"
 
-const routerBase = Router()
+const router = Router()
 
-routerBase.get("/teste", (req: Request, res: Response) => {
-    res.send('Hello, World!')
+router.get("/teste", (req: Request, res: Response) => {
+    res.send({message:'<h1>Hello, World!</h1>'})
 })
 
-export default routerBase
+export default router

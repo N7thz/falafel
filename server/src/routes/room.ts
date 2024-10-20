@@ -1,19 +1,27 @@
 import { Request, Response, Router } from "express"
-import { randomUUID } from "crypto"
+import { randomUUID } from "node:crypto"
 import { prisma } from "@/lib/prisma"
 
 const router = Router()
 
 interface CreateRoomRequest {
-    name: string
+    nameRoom: string
+    authorId: string
 }
 
-router.post("/create-room", async (
+router.get("/rooms", async (_: Request, res: Response) => {
+
+    const rooms = await prisma.room.findMany()
+
+    res.send(rooms)
+})
+
+router.post("/rooms", async (
     req: Request<{}, {}, CreateRoomRequest>,
     res: Response
 ) => {
-    const { name } = req.body
-    console.log(name)
+
+    const { nameRoom: name, authorId } = req.body
 
     const roomAlreadyExist = await prisma.room.findUnique({
         where: {
@@ -23,9 +31,11 @@ router.post("/create-room", async (
 
     if (roomAlreadyExist) {
 
-        res.status(400).send({
-            message: "Room already exists"
-        })
+        res
+            .status(400)
+            .send({
+                message: "Room already exists"
+            })
 
     } else {
 
@@ -33,7 +43,7 @@ router.post("/create-room", async (
             data: {
                 id: randomUUID(),
                 name,
-                authorId: "",
+                authorId,
                 createdAt: new Date(),
             }
         })

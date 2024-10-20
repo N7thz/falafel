@@ -1,9 +1,8 @@
 import express from "express"
 import { createServer } from "node:http"
 import { Server as Io } from "socket.io"
-import routerBase from "./routes/use-routes"
-import routers from "./routes/create-room"
 import cors from "cors"
+import router from "./routes"
 
 const port = 3333
 
@@ -29,8 +28,7 @@ socketIo.on("connection", (socket) => {
 
 app.use(cors())
 app.use(express.json())
-app.use("/api", routers)
-app.use("/api", routerBase)
+app.use("/api", router)
 
 server.listen(port, () => {
     console.log("server is runnig")

@@ -14,7 +14,7 @@ export default function Home() {
         className="p-1 overflow-hidden bg-background z-40"
         color={["#6366f1", "#a855f7", "#ec4899"]}
       >
-        <Card className="space-y-6 border-none">
+        <Card className="space-y-6 border-none z-40">
           <CardHeader>
             <CardTitle className="text-6xl">
               Falafel Chat
